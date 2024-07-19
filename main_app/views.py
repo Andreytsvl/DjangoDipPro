@@ -4,7 +4,8 @@ from django.http import HttpResponse
 def index(request):
     context: dict = {
         'title': 'Home',
-        'content': 'Главная страница магазина Аптека V'
+        'content': 'Главная страница магазина Аптека (V)'
+
     }
     return render(request, 'main_app/index.html', context)
 
