@@ -3,11 +3,16 @@ from django.http import HttpResponse
 
 def index(request):
     context: dict = {
-        'title': 'Home',
-        'content': 'Главная страница магазина Аптека (V)'
-
+        'title': 'Home - Главная страница магазина Аптека (V)',
+        'content': 'Магазин Аптека (V)'
     }
-    return render(request, 'main_app/index.html', context)
+    return render(request, 'main_app/index1.html', context)
 
 def about(request):
-    return HttpResponse('About us')
+    context: dict = {
+        'title': 'Home - О нас',
+        'content': 'Адрес Телефон',
+        'text_page': 'Наши преимущества',
+    }
+    return render(request, 'main_app/about.html', context)
+
