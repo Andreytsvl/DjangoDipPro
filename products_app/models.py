@@ -10,12 +10,18 @@ class Categories(models.Model):
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
 
+    def __str__(self):
+        return self.name
+
 class Recipe_status(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Рецептурный статус')
 
     class Meta:
         verbose_name = 'Рецептурный статус'
         verbose_name_plural = 'Рецептурные статусы'
+
+    def __str__(self):
+        return self.name
 
 class Storage_conditions(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Условия хранения')
@@ -24,12 +30,18 @@ class Storage_conditions(models.Model):
         verbose_name = 'Условия хранения'
         verbose_name_plural = 'Условия хранения'
 
+    def __str__(self):
+        return self.name
+
 class Price_category(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Ценовая категория')
 
     class Meta:
         verbose_name = 'Ценовая категория'
         verbose_name_plural = 'Ценовые категории'
+
+    def __str__(self):
+        return self.name
 
 
 class Products(models.Model):
@@ -51,3 +63,5 @@ class Products(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
+    def __str__(self):
+        return self.name
