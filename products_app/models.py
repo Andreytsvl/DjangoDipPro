@@ -1,4 +1,5 @@
 from django.db import models
+#from django.urls import reverse
 from django.urls import reverse
 
 
@@ -6,9 +7,12 @@ class Categories(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Группа')
 
     class Meta:
-        db_table = 'category'
+
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
+
+    def __str__(self):
+        return self.name
 
 class Recipe_status(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Рецептурный статус')
@@ -17,6 +21,9 @@ class Recipe_status(models.Model):
         verbose_name = 'Рецептурный статус'
         verbose_name_plural = 'Рецептурные статусы'
 
+    def __str__(self):
+        return self.name
+
 class Storage_conditions(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Условия хранения')
 
@@ -24,12 +31,18 @@ class Storage_conditions(models.Model):
         verbose_name = 'Условия хранения'
         verbose_name_plural = 'Условия хранения'
 
+    def __str__(self):
+        return self.name
+
 class Price_category(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Ценовая категория')
 
     class Meta:
         verbose_name = 'Ценовая категория'
         verbose_name_plural = 'Ценовые категории'
+
+    def __str__(self):
+        return self.name
 
 
 class Products(models.Model):
@@ -40,13 +53,16 @@ class Products(models.Model):
     price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена базовая')
     discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка в %')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
-    #category = models.ForeignKey(to=Categories, on_delete=models.PROTECT, verbose_name='Категория')
-    #price_category = models.ForeignKey(to=Price_category, on_delete=models.PROTECT, verbose_name='Ценовая категория')
+    category = models.ForeignKey(to=Categories, on_delete=models.PROTECT, verbose_name='Группа')
+    price_category = models.ForeignKey(to=Price_category, on_delete=models.PROTECT, verbose_name='Ценовая категория')
     storage_conditions = models.ForeignKey(to=Storage_conditions, on_delete=models.PROTECT, verbose_name='Условия хранения')
-    #recipe_status= models.ForeignKey(to=Recipe_status, on_delete=models.PROTECT, verbose_name='Рецептурный статус')
+    recipe_status= models.ForeignKey(to=Recipe_status, on_delete=models.PROTECT, verbose_name='Рецептурный статус')
 
 
     class Meta:
         db_table = 'product'
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+    def __str__(self):
+        return self.name
