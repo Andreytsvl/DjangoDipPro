@@ -6,7 +6,7 @@ class Categories(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Группа')
 
     class Meta:
-        db_table = 'category'
+
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
 
@@ -40,13 +40,14 @@ class Products(models.Model):
     price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена базовая')
     discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка в %')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
-    #category = models.ForeignKey(to=Categories, on_delete=models.PROTECT, verbose_name='Категория')
-    #price_category = models.ForeignKey(to=Price_category, on_delete=models.PROTECT, verbose_name='Ценовая категория')
+    category = models.ForeignKey(to=Categories, on_delete=models.PROTECT, verbose_name='Группа')
+    price_category = models.ForeignKey(to=Price_category, on_delete=models.PROTECT, verbose_name='Ценовая категория')
     storage_conditions = models.ForeignKey(to=Storage_conditions, on_delete=models.PROTECT, verbose_name='Условия хранения')
-    #recipe_status= models.ForeignKey(to=Recipe_status, on_delete=models.PROTECT, verbose_name='Рецептурный статус')
+    recipe_status= models.ForeignKey(to=Recipe_status, on_delete=models.PROTECT, verbose_name='Рецептурный статус')
 
 
     class Meta:
         db_table = 'product'
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
