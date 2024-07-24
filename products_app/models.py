@@ -1,5 +1,5 @@
 from django.db import models
-#from django.urls import reverse
+
 from django.urls import reverse
 
 
@@ -66,3 +66,12 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+    def display_id(self):
+        return f"{self.id:06}"
+
+    def retail_price(self):
+        if self.discount:
+            return round(self.price - self.price * self.discount / 100, 2)
+
+        return self.price
