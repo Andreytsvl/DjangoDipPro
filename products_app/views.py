@@ -5,8 +5,13 @@ from django.views.generic import DetailView, ListView
 from products_app.models import Products
 # from goods.utils import q_search
 
-def catalog(request):
-    products_app = Products.objects.all() #ORM -запрос
+def catalog(request, category_id):
+    if category_id == 5:
+        products_app = Products.objects.all()
+    else:
+        products_app = Products.objects.filter(category__id=category_id) #ORM -запрос
+        if not products_app.exists():
+            raise Http404()
 
     context = {
         "title": "Home - Каталог",
@@ -16,11 +21,14 @@ def catalog(request):
     return render(request, "products_app/catalog.html", context)
 
 
-def products(request):
-    # product = Products.objects.get(slug=product_slug)
-    #
-    # context = {"product": product}
+def products(request, product_slug=False, product_id=False):
+    if product_id:
+        product = Products.objects.get(id=product_id) #ORM
 
-    return render(request, "products_app/products.html")
+    else:
+        product = Products.objects.get(slug=product_slug)
+    context = {"product": product}
+
+    return render(request, "products_app/products.html", context=context)
 
 

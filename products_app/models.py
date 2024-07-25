@@ -6,6 +6,9 @@ from django.urls import reverse
 class Categories(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Группа')
 
+    def __str__(self):
+        return f"{self.name},{self.id}"
+
     class Meta:
 
         verbose_name = 'Группа'
