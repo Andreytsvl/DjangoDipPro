@@ -3,15 +3,19 @@ from django.http import Http404
 from django.views.generic import DetailView, ListView
 from django.core.paginator import Paginator
 from products_app.models import Products
+from products_app.utils import q_search
 # from goods.utils import q_search
 
-def catalog(request, category_id):
+def catalog(request, category_id=None):
     page = request.GET.get('page', 1)
     on_sale = request.GET.get('on_sale', None)
     order_by = request.GET.get('order_by', None)
+    query = request.GET.get('q', None)
 
     if category_id == 5:
         products_app = Products.objects.all()
+    elif query:
+        products_app = q_search(query)
     else:
         products_app = get_list_or_404(Products.objects.filter(category__id=category_id)) #ORM -запрос
 
