@@ -12,7 +12,7 @@ def catalog(request, category_id=None):
     order_by = request.GET.get('order_by', None)
     query = request.GET.get('q', None)
 
-    if category_id == 5:
+    if category_id == 1:
         products_app = Products.objects.all()
     elif query:
         products_app = q_search(query)
