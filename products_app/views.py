@@ -1,96 +1,49 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from django.http import Http404
 from django.views.generic import DetailView, ListView
-
-# from goods.models import Products
+from django.core.paginator import Paginator
+from products_app.models import Products
+from products_app.utils import q_search
 # from goods.utils import q_search
 
-def catalog(request):
+def catalog(request, category_id=None):
+    page = request.GET.get('page', 1)
+    on_sale = request.GET.get('on_sale', None)
+    order_by = request.GET.get('order_by', None)
+    query = request.GET.get('q', None)
+
+    if category_id == 1:
+        products_app = Products.objects.all()
+    elif query:
+        products_app = q_search(query)
+    else:
+        products_app = get_list_or_404(Products.objects.filter(category__id=category_id)) #ORM -запрос
+
+    if on_sale:
+        products_app = products_app.filter(discount__gt=0)
+    if order_by and order_by !='default':
+        products_app = products_app.order_by(order_by)
+
+    paginator = Paginator(products_app, 3)
+    current_page = paginator.page(int(page))
+
     context = {
         "title": "Home - Каталог",
-        "products_app": [
-            {
-                "image": "deps/images/goods/set of tea table and three chairs.jpg",
-                "name": "Чайный столик и три стула",
-                "description": "Комплект из трёх стульев и дизайнерский столик для гостинной комнаты.",
-                "price": 150.00,
-            },
-            {
-                "image": "deps/images/goods/set of tea table and two chairs.jpg",
-                "name": "Чайный столик и два стула",
-                "description": "Набор из стола и двух стульев в минималистическом стиле.",
-                "price": 93.00,
-            },
-            {
-                "image": "deps/images/goods/double bed.jpg",
-                "name": "Двухспальная кровать",
-                "description": "Кровать двухспальная с надголовником и вообще очень ортопедичная.",
-                "price": 670.00,
-            },
-            {
-                "image": "deps/images/goods/kitchen table.jpg",
-                "name": "Кухонный стол с раковиной",
-                "description": "Кухонный стол для обеда с встроенной раковиной и стульями.",
-                "price": 365.00,
-            },
-            {
-                "image": "deps/images/goods/kitchen table 2.jpg",
-                "name": "Кухонный стол с встройкой",
-                "description": "Кухонный стол со встроенной плитой и раковиной. Много полок и вообще красивый.",
-                "price": 430.00,
-            },
-            {
-                "image": "deps/images/goods/corner sofa.jpg",
-                "name": "Угловой диван для гостинной",
-                "description": "Угловой диван, раскладывается в двухспальную кровать, для гостинной и приема гостей самое то!",
-                "price": 610.00,
-            },
-            {
-                "image": "deps/images/goods/bedside table.jpg",
-                "name": "Прикроватный столик",
-                "description": "Прикроватный столик с двумя выдвижными ящиками (цветок не входит в комплект).",
-                "price": 55.00,
-            },
-            {
-                "image": "deps/images/goods/sofa.jpg",
-                "name": "Диван обыкновенный",
-                "description": "Диван, он же софа обыкновенная, ничего примечательного для описания.",
-                "price": 190.00,
-            },
-            {
-                "image": "deps/images/goods/office chair.jpg",
-                "name": "Стул офисный",
-                "description": "Описание товара, про то какой он классный, но это стул, что тут сказать...",
-                "price": 30.00,
-            },
-            {
-                "image": "deps/images/goods/plants.jpg",
-                "name": "Растение",
-                "description": "Растение для украшения вашего интерьера подарит свежесть и безмятежность обстановке.",
-                "price": 10.00,
-            },
-            {
-                "image": "deps/images/goods/flower.jpg",
-                "name": "Цветок стилизированный",
-                "description": "Дизайнерский цветок (возможно искусственный) для украшения интерьера.",
-                "price": 15.00,
-            },
-            {
-                "image": "deps/images/goods/strange table.jpg",
-                "name": "Прикроватный столик",
-                "description": "Столик, довольно странный на вид, но подходит для размещения рядом с кроватью.",
-                "price": 25.00,
-            },
-        ],
+        "products_app": current_page,
+        "id_url":category_id,
+
     }
     return render(request, "products_app/catalog.html", context)
 
 
-def products(request):
-    # product = Products.objects.get(slug=product_slug)
-    #
-    # context = {"product": product}
+def products(request, product_slug=False, product_id=False):
+    if product_id:
+        product = Products.objects.get(id=product_id) #ORM
 
-    return render(request, "products_app/products.html")
+    else:
+        product = Products.objects.get(slug=product_slug)
+    context = {"product": product}
+
+    return render(request, "products_app/products.html", context=context)
 
 

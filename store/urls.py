@@ -17,9 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 #from main_app import views
+from store import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_app.urls', namespace='main_app')),
     path('catalog/', include('products_app.urls', namespace='catalog')),
+    path('user/', include('users_app.urls', namespace='user')),
+    path("__debug__/", include("debug_toolbar.urls")), #DEBUG режим
+    #static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ]
+
+if settings.DEBUG:
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

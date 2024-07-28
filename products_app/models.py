@@ -1,10 +1,13 @@
 from django.db import models
-#from django.urls import reverse
+
 from django.urls import reverse
 
 
 class Categories(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Группа')
+
+    def __str__(self):
+        return f"{self.name},{self.id}"
 
     class Meta:
 
@@ -63,6 +66,16 @@ class Products(models.Model):
         db_table = 'product'
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
+
+    def display_id(self):
+        return f"{self.id:06}"
+
+    def retail_price(self):
+        if self.discount:
+            return round(self.price - self.price * self.discount / 100, 2)
+
+        return self.price
