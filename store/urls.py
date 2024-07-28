@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_app.urls', namespace='main_app')),
     path('catalog/', include('products_app.urls', namespace='catalog')),
+    path('user/', include('users_app.urls', namespace='user')),
     path("__debug__/", include("debug_toolbar.urls")), #DEBUG режим
     #static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ]
