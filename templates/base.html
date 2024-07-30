@@ -61,7 +61,9 @@
                                 <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
                                 <li><a class="dropdown-item  text-white" href="{% url 'users_app:profile' %}">Личный кабинет</a>
                                 </li>
-                                <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}" >Админ панель</a></li>
+                                {% if user.is_admin or user.is_staff %}
+                                    <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}" >Админ панель</a></li>
+                                {% endif %}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -179,6 +181,7 @@
                 </div>
                 <div class="col-lg-10">
                     <!-- Контент на странице -->
+                    {% include "includes/notifications.html" %}
                     {% block content %}
                     {% endblock content %}
                 </div>

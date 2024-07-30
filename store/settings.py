@@ -150,3 +150,4 @@ INTERNAL_IPS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users_app.User'
+LOGIN_URL = '/user/login/' #работа декоратора логин_реквайред
