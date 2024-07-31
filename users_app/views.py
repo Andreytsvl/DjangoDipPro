@@ -36,7 +36,7 @@ def registration(request):
             user = form.instance
             auth.login(request, user)
             messages.success(request, f"{user.username}, Вы зарегистрированы")
-            return HttpResponseRedirect(reverse('main_app:index'))
+        return HttpResponseRedirect(reverse('main_app:index'))
     else:
         form = UserRegistrationForm()
 
@@ -60,6 +60,9 @@ def profile(request):
         'form': form
     }
     return render(request, 'users_app/profile.html', context)
+
+def users_basket(request):
+    return render(request, 'users_app/users_basket.html')
 
 @login_required
 def logout(request):
