@@ -105,7 +105,7 @@ $(document).ready(function () {
 
 
 
-    // Теперь + - количества товара 
+
     // Обработчик события для уменьшения значения
     $(document).on("click", ".decrement", function () {
         // Берем ссылку на контроллер django из атрибута data-basket-change-url

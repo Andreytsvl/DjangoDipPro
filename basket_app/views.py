@@ -21,21 +21,54 @@ def basket_add(request):
         else:
             Basket.objects.create(user=request.user, product=product, quantity=1)
 
+    else:
+        baskets = Basket.objects.filter(
+            session_key=request.session.session_key, product=product)
+
+        if baskets.exists():
+            basket = baskets.first()
+            if basket:
+                basket.quantity += 1
+                basket.save()
+        else:
+            Basket.objects.create(
+                session_key=request.session.session_key, product=product, quantity=1)
+
     user_basket = get_user_baskets(request)
     basket_items_html = render_to_string(
         "basket/includes/included_basket.html", {"basket": user_basket}, request=request)
 
     response_data = {
         "message": "Товар добавлен в корзину",
-        "cart_items_html": basket_items_html,
+        "basket_items_html": basket_items_html,
     }
 
     return JsonResponse(response_data)
 
 
-def basket_change(request, product_slug):
+def basket_change(request):
+    basket_id = request.POST.get("basket_id")
+    quantity = request.POST.get("quantity")
 
-    pass
+    basket = Basket.objects.get(id=basket_id)
+
+    basket.quantity = quantity
+    basket.save()
+    updated_quantity = basket.quantity
+
+    basket = get_user_baskets(request)
+    basket_items_html = render_to_string(
+        "baskets/includes/included_basket.html", {"baskets": basket}, request=request)
+
+    response_data = {
+        "message": "Количество изменено",
+        "basket_items_html": basket_items_html,
+        "quantity": updated_quantity,
+    }
+
+    return JsonResponse(response_data)
+
+
 
 def basket_remove(request):
     basket_id = request.POST.get("basket_id")
