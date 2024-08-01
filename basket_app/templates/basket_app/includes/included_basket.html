@@ -15,13 +15,13 @@
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
-                                    data-cart-id="" data-cart-change-url="">-</button>
+                                    data-basket-id="" data-basket-change-url="">-</button>
                             </span>
                             <input type="text" class="form-control number" value="{{ basket.quantity }}"
                                 readonly>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm increment"
-                                    data-cart-id="" data-cart-change-url="">+</button>
+                                    data-basket-id="" data-basket-change-url="">+</button>
                             </span>
                         </div>
                     </div>
@@ -30,7 +30,10 @@
                     </div>
                     <div class="col p-0"><strong>{{ basket.products_price }} руб.</strong></div>
                     <div class="col p-0">
-                        <a href="{% url 'basket:basket_remove' 1 %}" class="remove-from-cart" data-cart-id="">
+                        {% csrf_token %}
+                        <a href="{% url 'basket:basket_remove' %}" class="remove-from-basket"
+                        data-basket-id="{{ basket.id }}">
+                            {% csrf_token %}
                             <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>
