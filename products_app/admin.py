@@ -10,21 +10,21 @@ admin.site.register(Price_category)
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-#     list_display = ["name", "quantity", "price", "discount"]
-#     list_editable = ["discount",]
-#     search_fields = ["name", "description"]
-#     list_filter = ["discount", "quantity", "category"]
-#     fields = [
-#         "name",
-#         "category",
-#         "slug",
-#         "description",
-#         "image",
-#         ("price", "discount"),
-#         "quantity",
-#   ]
+    list_display = ["name", "quantity", "price", "discount"]
+    list_editable = ["discount",] #изменение поля дисконт
+    search_fields = ["name", "description"]
+    list_filter = ["discount", "quantity", "category"]
+    fields = [
+        "name",
+        "category",
+        "slug",
+        "description",
+        "image",
+        ("price", "discount"),
+        "quantity",
+  ] # порядок размещения полей внутри
 
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):
-
+    ordering = ["name"]
     list_display = ["name", "id"]

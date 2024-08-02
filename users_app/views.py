@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from basket_app.models import Basket
-
 from users_app.forms import UserLoginForm, UserRegistrationForm, ProfileForm
 
 def login(request):
