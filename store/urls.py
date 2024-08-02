@@ -26,6 +26,7 @@ urlpatterns = [
     path('catalog/', include('products_app.urls', namespace='catalog')),
     path('user/', include('users_app.urls', namespace='user')),
     path('basket/', include('basket_app.urls', namespace='basket')),
+    path('orders/', include('orders.urls', namespace='orders')),
     path("__debug__/", include("debug_toolbar.urls")), #DEBUG режим
     #static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ]
