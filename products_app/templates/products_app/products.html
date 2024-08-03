@@ -8,8 +8,10 @@
         <div class="row">
             <!-- Миниатюры -->
             <div class="col-md-4">
+                {% if product.image %}
                 <img src="{{ product.image.url }}"
                     class="img-thumbnail" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                {% endif %}
             </div>
             <div class="col-md-4 ">
                 <p class="product_id mt-3">id: {{ product.display_id }}</p>
@@ -24,8 +26,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Закрыть"></button>
                         </div>
-                        <div class="modal-body">
+                        {% if product.image %}
+
                             <img src="{{ product.image.url }}"
+                        {% endif %}
+                                 <div class="modal-body">
                                 class="img-fluid" alt="Изображение 1">
                         </div>
                     </div>
