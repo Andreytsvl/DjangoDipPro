@@ -1,5 +1,8 @@
 {% load static %}
 {% load product_tags %}
+{% load baskets_tags %}
+
+{% user_baskets request as baskets %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,9 +49,9 @@
                                 <li><a class="dropdown-item  text-white" href="{% url 'main_app:about' %}">Про нас</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link  text-white" href="carts/cart.html">Корзина</a>
-                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link  text-white" href="{% url 'user:users_basket' %}">Корзина</a>-->
+<!--                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link  text-white" href="{% url 'users_app:login' %}">Войти</a>
                         </li>
@@ -58,10 +61,12 @@
                                 Мой профиль
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
+<!--                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>-->
                                 <li><a class="dropdown-item  text-white" href="{% url 'users_app:profile' %}">Личный кабинет</a>
                                 </li>
-                                <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}" >Админ панель</a></li>
+                                {% if user.is_admin or user.is_staff %}
+                                    <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}" >Админ панель</a></li>
+                                {% endif %}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -96,13 +101,14 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <!-- Значек корзины, вызывает модальное окно -->
+                <!-- Значок корзины, вызывает модальное окно -->
                 <div>
                     <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
                         aria-expanded="false">
                         <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24"
                             height="24">
-                        <span id="goods-in-cart-count">0</span>
+                        <a class="nav-link  text-white" href="{% url 'user:users_basket' %}">&#160 Корзина </a>
+                        <span id="goods-in-cart-count">&#160 {{ baskets.total_quantity}}</span>
                     </button>
                 </div>
                 <!-- Разметка модального окна корзины -->
@@ -118,51 +124,14 @@
                                 <h3 class="text-center mb-4">Корзина</h3>
                                 <div class="container" id="cart-items-container">
                                     <!-- Разметка корзины -->
-                                    <div class="card mb-3 text-bg-light shadow-lg">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Товар</h5>
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <div class="row text-center">
-                                                    <div class="col p-0">
-                                                        <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-dark btn-sm decrement"
-                                                                    data-cart-id="" data-cart-change-url="">-</button>
-                                                            </span>
-                                                            <input type="text" class="form-control number" value="1"
-                                                                readonly>
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-dark btn-sm increment"
-                                                                    data-cart-id="" data-cart-change-url="">+</button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col p-0">
-                                                        <p>x 100.00 = </p>
-                                                    </div>
-                                                    <div class="col p-0"><strong>100.00 $</strong></div>
-                                                    <div class="col p-0">
-                                                        <a href="#" class="remove-from-cart" data-cart-id="">
-                                                            <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
-                                                                alt="Catalog Icon" width="16" height="16">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card mb-3 shadow-lg">
-                                        <div class="card-footer">
-                                            <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
-                                            <h4 class="float-left"><strong>100.00 $</strong></h4>
-                                        </div>
-                                    </div>
+                                    {% include "basket_app/includes/included_basket.html" %}
                                     <!-- Закончилась разметка корзины -->
                                 </div>
-                                <a class="btn btn-dark" href="orders/create_order.html">
-                                    Оформить заказ
+<!--                                {% if basket %}-->
+<!--                                {% endif %}-->
+                                    <a class="btn btn-dark" href="orders/create_order.html">
+                                        Оформить заказ
+
                                 </a>
                             </div>
                         </div>
@@ -179,6 +148,7 @@
                 </div>
                 <div class="col-lg-10">
                     <!-- Контент на странице -->
+                    {% include "includes/notifications.html" %}
                     {% block content %}
                     {% endblock content %}
                 </div>
@@ -189,7 +159,6 @@
     {% endblock footer %}
 
     <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
-    <script src="{% static 'deps/js/jquery-events.js' %}"></script>
     <script src="{% static 'deps/js/jquery-ajax.js' %}"></script>
     <script src="{% static 'deps/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
 </body>
