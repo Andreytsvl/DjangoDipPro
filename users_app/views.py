@@ -3,8 +3,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Prefetch
 from basket_app.models import Basket
 from users_app.forms import UserLoginForm, UserRegistrationForm, ProfileForm
+from orders.models import Order, OrderItem
 
 def login(request):
     if request.method == 'POST':
@@ -73,9 +75,18 @@ def profile(request):
             return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = ProfileForm(instance=request.user)
+
+    orders = Order.objects.filter(user=request.user).prefetch_related(
+        Prefetch(
+            "orderitem_set",
+            queryset=OrderItem.objects.select_related("product"),
+        )
+    ).order_by("-id")
+
     context = {
         'title': 'Home - Кабинет',
-        'form': form
+        'form': form,
+        'orders': orders
     }
     return render(request, 'users_app/profile.html', context)
 

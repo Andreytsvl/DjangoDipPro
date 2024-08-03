@@ -1,6 +1,7 @@
 from django.contrib import admin
 from users_app.models import User
 from basket_app.admin import BasketTabAdmin
+from orders.admin import OrderTabulareAdmin
 
 #admin.site.register(User)
 
@@ -11,4 +12,4 @@ class UserAdmin(admin.ModelAdmin):
 
 
 
-    inlines = [BasketTabAdmin,] # отображение корзины в карточке пользователя
+    inlines = [BasketTabAdmin, OrderTabulareAdmin] # отображение корзины в карточке пользователя
