@@ -61,7 +61,7 @@
                                 Мой профиль
                             </a>
                             <ul class="dropdown-menu">
-<!--                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>-->
+<!--                                <li><a class="dropdown-item  text-white" href="{% url 'users_app:users_basket' %}">Корзина</a></li>-->
                                 <li><a class="dropdown-item  text-white" href="{% url 'users_app:profile' %}">Личный кабинет</a>
                                 </li>
                                 {% if user.is_admin or user.is_staff %}
@@ -85,7 +85,7 @@
     <section>
         <div class="container">
             <!-- Каталог и корзина с фиксированным расположением на странице -->
-            <div class="row mt-1 position-fixed z-3">
+            <div class="row mt-5 position-fixed z-3">
                 <!-- Каталог -->
                 <div class="dropdown mb-2">
                     <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
@@ -101,15 +101,24 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <!-- Значок корзины, вызывает модальное окно -->
+<!--                 Значок корзины, вызывает модальное окно-->
                 <div>
-                    <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
-                        aria-expanded="false">
+<!--                    <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"-->
+<!--                        aria-expanded="false">-->
+<!--                        <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24"-->
+<!--                            height="24">-->
+<!--                        <a class="nav-link  text-white" href="{% url 'users_app:users_basket' %}">&#160 Корзина </a>-->
+
+<!--                        <span id="goods-in-cart-count">&#160 {{ baskets.total_quantity}}</span>-->
+<!--                    </button>-->
+
+
+
                         <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24"
                             height="24">
-                        <a class="nav-link  text-white" href="{% url 'user:users_basket' %}">&#160 Корзина </a>
-                        <span id="goods-in-cart-count">&#160 {{ baskets.total_quantity}}</span>
-                    </button>
+                        <a class="nav-link  text-white" >&#160 Для оформления<br> заказа перейдите<br> в личный кабинет. <br> Сейчас в <br> корзине </a>
+
+                        <a class="nav-link  text-white" >&#160 {{ baskets.total_quantity}} единицы <br> товара </a>
                 </div>
                 <!-- Разметка модального окна корзины -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
