@@ -35,7 +35,7 @@ def login(request):
 
     context = {
 
-        'title': 'Home - Авторизация',
+        'title': 'Авторизация',
         'form': form
     }
     return render(request, 'users_app/login.html', context)
@@ -56,12 +56,12 @@ def registration(request):
                 Basket.objects.filter(session_key=session_key).update(user=user)
 
             messages.success(request, f"{user.username}, Вы зарегистрированы")
-        return HttpResponseRedirect(reverse('main_app:index'))
+            return HttpResponseRedirect(reverse('main_app:index'))
     else:
         form = UserRegistrationForm()
 
     context = {
-        'title': 'Home - Регистрация',
+        'title': 'Регистрация',
         'form':form
     }
     return render(request, 'users_app/registration.html', context)
