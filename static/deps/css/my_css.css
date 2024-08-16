@@ -4,6 +4,7 @@ body {
   background-attachment: fixed;
   background-position: center center;
   background-size: cover;
+  
   height: 100%;
 }
 
@@ -11,12 +12,18 @@ body {
   content: none;
 }
 
+@media:(max-width:800px){
+  .dropdown{
+   grid-template-columns
+ }
+}
+
 .custom-shadow {
   box-shadow: 5px 5px 25px 19px #000000;
 }
 
 .product_id {
-  color: gray;
+  color: gray ;
   font-size: 15px;
 }
 
@@ -35,4 +42,20 @@ body {
   top: 80%;
   border-radius: 15px;
   font-size: 0.7rem;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 1 calc(33.333% - 1rem); /* 33.333% ширина карты минус 1rem для отсупа */
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1;
 }

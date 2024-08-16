@@ -5,6 +5,7 @@
 
 {% block content %}
 <div class="row">
+
     <!-- Форма фильтров -->
     <div class="dropdown mb-2">
         <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Фильтры
@@ -51,24 +52,26 @@
     {% if request.GET.q %}
     <h3 class="mt-4">Результаты поиска по запросу {{ request.GET.q }}</h3>
     {% if not products_app %}
-        <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+        <link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
         <h2 class="mt-4">По запросу ничего не найдено</h2>
     {% endif %}
     {% endif %}
     {% for product in products_app %}
         <!-- Карта товара -->
-        <div class="col-lg-4 col-md-6 p-4">
-            <div class="card border-primary rounded custom-shadow">
+
+        <div class='card' style="width: 18rem;">
+
+            <div class="card border-primary rounded ">
                 {% if product.image %}
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
-                    <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="...">
+                    <img src="{% static 'deps/images/Not found image.png' %}" class="card-img-top" alt="...">
                 {% endif %}
                 <div class="card-body">
                     <a href="{% url 'catalog:products' product.slug %}">
                         <p class="card-title">{{ product.name }}</p>
                     </a>
-                    <p class="card-text ">{{ product.description|truncatechars:50 }}</p>
+                    <p class="card-text ">{{ product.description|truncatechars:40 }}</p>
                     <p class="product_id">id: {{ product.display_id }}</p>
                     <div class="d-flex justify-content-between">
                         {% if product.discount %}
@@ -83,7 +86,7 @@
                         <a href="{% url 'basket:basket_add' %}" class="btn add-to-basket"
                         data-product-id="{{ product.id }}">
                             {% csrf_token %}
-                            <img class="mx-1" src="{% static 'deps/icons/cart-plus.svg' %}" alt="Catalog Icon"
+                            <img class="mx-1" src="{% static 'deps/icons/basket.png' %}" alt="Catalog Icon"
                                 width="32" height="32">
                         </a>
                     </div>

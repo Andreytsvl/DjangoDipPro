@@ -11,6 +11,7 @@
             {% user_baskets request as baskets %}
 
             {% include "basket_app/includes/included_basket.html" %}
+            <a class="button"  href="{% url 'orders:create_order' %}">
             <!-- Закончилась разметка корзины -->
         </div>
     </div>

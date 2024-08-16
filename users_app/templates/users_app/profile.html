@@ -71,12 +71,15 @@
                     <div class="container" id="cart-items-container">
                         <!-- Разметка корзины -->
                         {% include "basket_app/includes/included_basket.html" %}
+                        <a class="button"  href="{% url 'orders:create_order' %}">
+                                        Оформить заказ
                         <!-- Закончилась разметка корзины -->
                     </div>
-                    <!--                                {% if basket %}-->
-<!--                                {% endif %}-->
+                    {% if basket %}
+
                     <a class="btn btn-dark" href="{% url 'orders:create_order' %}">
                         Оформить заказ
+                    {% endif %}
                     </a>
                 </div>
             </div>
