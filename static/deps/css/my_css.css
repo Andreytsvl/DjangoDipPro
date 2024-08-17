@@ -59,3 +59,9 @@ body {
 .card-body {
   flex: 1;
 }
+
+.custom-body {
+  display: flex;
+  justify-content: center; /* Размещает содержимое по центру по горизонтали */
+  align-items: center;  /* Размещает содержимое по центру по вертикали */
+}
