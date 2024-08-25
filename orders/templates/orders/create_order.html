@@ -3,7 +3,7 @@
 {% load baskets_tags %}
 
 {% block content %}
-<div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+<div class=" bg-white p-5 mb-4 mx-2 rounded custom-shadow">
     <div class="container">
         <h3 class="text-center mb-4">Выбранные товары</h3>
         <div class="container" id="basket-items-container">
@@ -11,6 +11,7 @@
             {% user_baskets request as baskets %}
 
             {% include "basket_app/includes/included_basket.html" %}
+            <a class="button"  href="{% url 'orders:create_order' %}">
             <!-- Закончилась разметка корзины -->
         </div>
     </div>
@@ -40,16 +41,16 @@
                                 <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
                             {% endif %}
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="id_phone_number" class="form-label">Номер телефона*:</label>
-                            <input type="text" class="form-control" id="id_phone_number" name="phone_number"
-                                value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}"
-                                placeholder="В формате: XXX-XXX-XX-XX"
-                                required>
-                            {% if form.phone_number.errors %}
-                                <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
-                            {% endif %}
-                        </div>
+<!--                        <div class="col-md-6 mb-3">-->
+<!--                            <label for="id_phone_number" class="form-label">Номер телефона*:</label>-->
+<!--                            <input type="text" class="form-control" id="id_phone_number" name="phone_number"-->
+<!--                                value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}"-->
+<!--&lt;!&ndash;                                placeholder="В формате: XXX-XXX-XX-XX"&ndash;&gt;-->
+<!--&lt;!&ndash;                                required>&ndash;&gt;-->
+<!--                            {% if form.phone_number.errors %}-->
+<!--                                <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>-->
+<!--                            {% endif %}-->
+<!--                        </div>-->
                         <div class="col-md-12 mb-3">
                             <label for="delivery" class="form-label">Способ доставки: </label>
                             <div class="form-check form-check-inline">

@@ -22,6 +22,9 @@ class ProductsAdmin(admin.ModelAdmin):
         "image",
         ("price", "discount"),
         "quantity",
+        "price_category",
+        "storage_conditions",
+        "recipe_status"
   ] # порядок размещения полей внутри
 
 @admin.register(Categories)

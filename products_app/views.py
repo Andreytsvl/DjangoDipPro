@@ -4,7 +4,7 @@ from django.views.generic import DetailView, ListView
 from django.core.paginator import Paginator
 from products_app.models import Products
 from products_app.utils import q_search
-# from goods.utils import q_search
+
 
 def catalog(request, category_id=None):
     page = request.GET.get('page', 1)
@@ -45,5 +45,8 @@ def products(request, product_slug=False, product_id=False):
     context = {"product": product}
 
     return render(request, "products_app/products.html", context=context)
+
+# {% user_basket request as baskets %}
+# {% with baskets=user_basket request %}
 
 
